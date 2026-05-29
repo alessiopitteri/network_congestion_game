@@ -1,0 +1,13 @@
+[project]
+name = "network-congestion-game"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "matplotlib>=3.10.9",
+    "networkx>=3.6.1",
+    "numpy>=2.4.6",
+    "osmnx>=2.1.0",
+    "scipy>=1.17.1",
+]
