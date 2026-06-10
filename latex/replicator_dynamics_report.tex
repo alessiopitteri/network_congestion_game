@@ -22,7 +22,7 @@ Let $\mathcal{Z}$ be a set of zones (origins and destinations), and let $K$ be t
   \mathcal{P} = \{(o,d) \mid o,d\in\mathcal{Z},\; o\neq d\},
   \qquad |\mathcal{P}| = N_{\mathrm{od}}.
 \]
-The state of the system is a matrix
+The state of the system is a dimensionless matrix
 \[
   \mathbf{x} \in \mathbb{R}^{N_{\mathrm{od}} \times K},
 \]
@@ -34,7 +34,7 @@ where $x_{od,m} \in [0,1]$ denotes the \emph{modal share} of mode $m$ for OD pai
 % -------------------------------------------------------
 \section{Edge Flow Assignment}
 
-Each mode $m$ is associated with a graph $G^{(m)}$. For each pair $(od, m)$, a fixed shortest path (computed at free-flow speed) provides a set of edges $\mathcal{E}_{od,m} \subseteq \mathcal{E}$. Given OD demands $q_{od} > 0$, the flow of mode $m$ on edge $e$ is
+Each mode $m$ is associated with a graph $G^{(m)}$. For each pair $(od, m)$, a fixed shortest path (computed at free-flow speed) provides a set of edges $\mathcal{E}_{od,m} \subseteq \mathcal{E}$. Given OD demands $q_{od} > 0$ [travelers], the flow of mode $m$ on edge $e$ is
 \[
   f_{e,m} = \sum_{od \in \mathcal{P}} q_{od}\, x_{od,m}\, \mathbf{1}\!\left[e \in \mathcal{E}_{od,m}\right].
 \]
@@ -42,15 +42,15 @@ Each mode $m$ is associated with a graph $G^{(m)}$. For each pair $(od, m)$, a f
 % -------------------------------------------------------
 \section{Edge Cost Function}
 
-Let $\ell_e > 0$ be the length of edge $e$, $v_{e,m} > 0$ the free-flow speed of mode $m$ on edge $e$ and $\kappa_{e,m} > 0$ its effective capacity. The \emph{density} of mode $m'$ on edge $e$ is
+Let $\ell_e > 0$ [m] be the length of edge $e$, $v_{e,m} > 0$ [m/s] the free-flow speed of mode $m$ on edge $e$ and $\kappa_{e,m} > 0$ [vehicles] its effective capacity. The \emph{density} of mode $m'$ on edge $e$ is
 \[
-  \rho_{e,m'} = \frac{f_{e,m'}}{\kappa_{e,m}}.
+  d_{e,m'} = \frac{f_{e,m'}}{\kappa_{e,m'}}.
 \]
-The travel cost (congested travel time) for mode $m$ on edge $e$ is
+The travel cost (congested travel time) for mode $m$ on edge $e$ is measured in seconds and is
 \[
   \boxed{
   c_{e,m} \;=\; \underbrace{\dfrac{\ell_e}{v_{e,m}}}_{\text{free-flow time}}
-            + \underbrace{\sum_{m'=1}^{K} M_{m,m'}\,\rho_{e,m'}}_{\text{congestion term}},
+            + \underbrace{\sum_{m'=1}^{K} M_{m,m'}\,d_{e,m'}}_{\text{congestion term}},
   }
 \]
 where $M \in \mathbb{R}^{K \times K}$ is the \emph{modal interaction matrix}. The entry $M_{m,m'}$ captures the extent to which the density of mode $m'$ slows down mode $m$.
@@ -58,7 +58,7 @@ where $M \in \mathbb{R}^{K \times K}$ is the \emph{modal interaction matrix}. Th
 % -------------------------------------------------------
 \section{OD Path Cost}
 
-The total cost of using mode $m$ for OD pair $od$ is the sum of edge costs along the corresponding path:
+The total cost of using mode $m$ for OD pair $od$ is the sum of edge costs along the corresponding path, measured in seconds:
 \[
   C_{od,m} = \sum_{e \in \mathcal{E}_{od,m}} c_{e,m}.
 \]
@@ -70,13 +70,13 @@ Let
 \[
   \bar{C}_{od}(t) = \sum_{m=1}^{K} x_{od,m}(t)\, C_{od,m}(t)
 \]
-be the \emph{average cost} experienced by travelers of OD pair $od$ at time $t$. The replicator dynamics read
+be the \emph{average cost} experienced by travelers of OD pair $od$ at time $t$, measured in seconds. The replicator dynamics read
 \[
   \boxed{
   \dot{x}_{od,m} \;=\; \rho\, x_{od,m}\!\left(\bar{C}_{od} - C_{od,m}\right),
   }
 \]
-where $\rho > 0$ is the replication (adjustment) rate.
+where $\rho > 0$ [1/s] is the replication (adjustment) rate.
 
 \subsection*{Interpretation}
 \begin{itemize}
@@ -103,14 +103,14 @@ This is precisely the Wardrop user-equilibrium condition: no traveler can unilat
 \toprule
 Symbol & Meaning \\
 \midrule
-$x_{od,m}$ & Modal share of mode $m$ for OD pair $od$ \\
-$f_{e,m}$ & Flow of mode $m$ on edge $e$ \\
-$c_{e,m}$ & Travel cost of mode $m$ on edge $e$ \\
-$C_{od,m}$ & Path cost of mode $m$ for OD pair $od$ \\
-$\bar C_{od}$ & Average path cost for OD pair $od$ \\
-$M_{m,m'}$ & Interaction coefficient (effect of mode $m'$ on mode $m$) \\
-$\rho$ & Replication rate \\
-$\ell_e,\,\kappa_{e,m}\,v_{e,m}$ & Edge length, capacity, free-flow speed \\
+$x_{od,m}$ & Modal share of mode $m$ for OD pair $od$ [dimensionless] \\
+$f_{e,m}$ & Flow of mode $m$ on edge $e$ [vehicles] \\
+$c_{e,m}$ & Travel cost of mode $m$ on edge $e$ [s] \\
+$C_{od,m}$ & Path cost of mode $m$ for OD pair $od$ [s] \\
+$\bar C_{od}$ & Average path cost for OD pair $od$ [s] \\
+$M_{m,m'}$ & Interaction coefficient (effect of mode $m'$ on mode $m$)\\
+$\rho$ & Replication rate [1/s] \\
+$\ell_e,\,\kappa_{e,m}\,v_{e,m}$ & Edge length [m], capacity [vehicles], free-flow speed [m/s] \\
 \bottomrule
 \end{tabular}
 \end{center}

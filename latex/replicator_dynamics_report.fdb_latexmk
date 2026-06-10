@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1781082411.10633 "/home/alepitt/phd/network_congestion_game/latex/replicator_dynamics_report.tex" "replicator_dynamics_report.pdf" "replicator_dynamics_report" 1781082411.35049 0
+["pdflatex"] 1781082944.82549 "/home/alepitt/phd/network_congestion_game/latex/replicator_dynamics_report.tex" "replicator_dynamics_report.pdf" "replicator_dynamics_report" 1781082945.08384 0
   "/etc/texmf/web2c/texmf.cnf" 1773228651.64981 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/alepitt/phd/network_congestion_game/latex/replicator_dynamics_report.tex" 1781082410.95012 4397 4fcc8416276b2bd21ec99b6a7e64b8e0 ""
+  "/home/alepitt/phd/network_congestion_game/latex/replicator_dynamics_report.tex" 1781082944.65958 4579 41a4d4ea56e9eeb478326a6c0083e388 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -70,8 +70,8 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1741904018 41538 c016915c1d51223b6dbbfe27341748a8 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1773316759 5467255 9a64d1b40e0b893fc5588ecce9d8accf ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1773316777 3346200 74c9b038db5250bdc087666b85096f44 ""
-  "replicator_dynamics_report.aux" 1781082411.32053 778 8e7b8b7042f793d671ca2efb49e160b4 "pdflatex"
-  "replicator_dynamics_report.tex" 1781082410.95012 4397 4fcc8416276b2bd21ec99b6a7e64b8e0 ""
+  "replicator_dynamics_report.aux" 1781082945.0536 778 8e7b8b7042f793d671ca2efb49e160b4 "pdflatex"
+  "replicator_dynamics_report.tex" 1781082944.65958 4579 41a4d4ea56e9eeb478326a6c0083e388 ""
   (generated)
   "replicator_dynamics_report.aux"
   "replicator_dynamics_report.log"
