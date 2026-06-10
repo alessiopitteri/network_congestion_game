@@ -1,0 +1,118 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{parskip}
+
+\title{\textbf{OD-Based Multimodal Replicator Dynamics}\\[4pt]}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+% -------------------------------------------------------
+\section{State Variables and Constraints}
+
+Let $\mathcal{Z}$ be a set of zones (origins and destinations), and let $K$ be the number of transport modes. Define the set of OD pairs as
+\[
+  \mathcal{P} = \{(o,d) \mid o,d\in\mathcal{Z},\; o\neq d\},
+  \qquad |\mathcal{P}| = N_{\mathrm{od}}.
+\]
+The state of the system is a matrix
+\[
+  \mathbf{x} \in \mathbb{R}^{N_{\mathrm{od}} \times K},
+\]
+where $x_{od,m} \in [0,1]$ denotes the \emph{modal share} of mode $m$ for OD pair $od$. The simplex constraint requires
+\[
+  \sum_{m=1}^{K} x_{od,m} = 1, \qquad \forall\, od \in \mathcal{P}.
+\]
+
+% -------------------------------------------------------
+\section{Edge Flow Assignment}
+
+Each mode $m$ is associated with a graph $G^{(m)}$. For each pair $(od, m)$, a fixed shortest path (computed at free-flow speed) provides a set of edges $\mathcal{E}_{od,m} \subseteq \mathcal{E}$. Given OD demands $q_{od} > 0$, the flow of mode $m$ on edge $e$ is
+\[
+  f_{e,m} = \sum_{od \in \mathcal{P}} q_{od}\, x_{od,m}\, \mathbf{1}\!\left[e \in \mathcal{E}_{od,m}\right].
+\]
+
+% -------------------------------------------------------
+\section{Edge Cost Function}
+
+Let $\ell_e > 0$ be the length of edge $e$, $v_{e,m} > 0$ the free-flow speed of mode $m$ on edge $e$ and $\kappa_{e,m} > 0$ its effective capacity. The \emph{density} of mode $m'$ on edge $e$ is
+\[
+  \rho_{e,m'} = \frac{f_{e,m'}}{\kappa_{e,m}}.
+\]
+The travel cost (congested travel time) for mode $m$ on edge $e$ is
+\[
+  \boxed{
+  c_{e,m} \;=\; \underbrace{\dfrac{\ell_e}{v_{e,m}}}_{\text{free-flow time}}
+            + \underbrace{\sum_{m'=1}^{K} M_{m,m'}\,\rho_{e,m'}}_{\text{congestion term}},
+  }
+\]
+where $M \in \mathbb{R}^{K \times K}$ is the \emph{modal interaction matrix}. The entry $M_{m,m'}$ captures the extent to which the density of mode $m'$ slows down mode $m$.
+
+% -------------------------------------------------------
+\section{OD Path Cost}
+
+The total cost of using mode $m$ for OD pair $od$ is the sum of edge costs along the corresponding path:
+\[
+  C_{od,m} = \sum_{e \in \mathcal{E}_{od,m}} c_{e,m}.
+\]
+
+% -------------------------------------------------------
+\section{Replicator Dynamics}
+
+Let
+\[
+  \bar{C}_{od}(t) = \sum_{m=1}^{K} x_{od,m}(t)\, C_{od,m}(t)
+\]
+be the \emph{average cost} experienced by travelers of OD pair $od$ at time $t$. The replicator dynamics read
+\[
+  \boxed{
+  \dot{x}_{od,m} \;=\; \rho\, x_{od,m}\!\left(\bar{C}_{od} - C_{od,m}\right),
+  }
+\]
+where $\rho > 0$ is the replication (adjustment) rate.
+
+\subsection*{Interpretation}
+\begin{itemize}
+  \item A mode whose cost $C_{od,m}$ is \emph{below} the average $\bar{C}_{od}$ is cheaper; its share \emph{grows}.
+  \item A mode whose cost is \emph{above} the average is more expensive; its share \emph{shrinks}.
+  \item The simplex constraint is preserved: $\tfrac{d}{dt}\sum_m x_{od,m} = \rho\sum_m x_{od,m}(\bar C_{od} - C_{od,m}) = \rho(\bar C_{od} - \bar C_{od}) = 0$.
+\end{itemize}
+
+% -------------------------------------------------------
+\section{Equilibrium}
+
+A fixed point $\mathbf{x}^*$ satisfies $\dot{x}_{od,m}=0$ for all $(od,m)$, which holds when, for every OD pair $od$,
+\[
+  x^*_{od,m} > 0 \;\Longrightarrow\; C_{od,m}(\mathbf{x}^*) = \bar{C}_{od}(\mathbf{x}^*).
+\]
+This is precisely the Wardrop user-equilibrium condition: no traveler can unilaterally reduce their cost by switching mode.
+
+% -------------------------------------------------------
+\section{Summary of Notation}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lp{9.5cm}@{}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$x_{od,m}$ & Modal share of mode $m$ for OD pair $od$ \\
+$f_{e,m}$ & Flow of mode $m$ on edge $e$ \\
+$c_{e,m}$ & Travel cost of mode $m$ on edge $e$ \\
+$C_{od,m}$ & Path cost of mode $m$ for OD pair $od$ \\
+$\bar C_{od}$ & Average path cost for OD pair $od$ \\
+$M_{m,m'}$ & Interaction coefficient (effect of mode $m'$ on mode $m$) \\
+$\rho$ & Replication rate \\
+$\ell_e,\,\kappa_{e,m}\,v_{e,m}$ & Edge length, capacity, free-flow speed \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}
