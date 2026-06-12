@@ -84,6 +84,8 @@ class ODReplicatorNetwork:
 
         self.lengths = np.asarray(edge_lengths)
 
+        self.edge_cost = np.zeros((self.E, self.K))
+
         self.capacities = np.asarray(
             edge_capacities
         )  # shape (E,K)
@@ -261,8 +263,7 @@ class ODReplicatorNetwork:
 
     def compute_od_costs(
         self,
-        edge_costs,
-    ):
+                ):
         """
         Cost of each mode for each OD pair.
         """
@@ -284,7 +285,7 @@ class ODReplicatorNetwork:
                 ]
 
                 costs[od, m] = np.sum(
-                    edge_costs[path, m]
+                    self.edge_costs[path, m]
                 )
 
         return costs
@@ -310,8 +311,8 @@ class ODReplicatorNetwork:
         x = x / x.sum(axis=1, keepdims=True)
 
         flows = self.compute_edge_flows(x)
-        edge_costs = self.compute_edge_costs(flows)
-        od_costs = self.compute_od_costs(edge_costs)
+        self.edge_costs = self.compute_edge_costs(flows)
+        od_costs = self.compute_od_costs()
 
         dxdt = np.zeros_like(x)
 
