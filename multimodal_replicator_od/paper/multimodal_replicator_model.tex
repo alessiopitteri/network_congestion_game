@@ -1,0 +1,51 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath, amssymb, geometry, times}
+\usepackage{sectsty}
+\geometry{margin=1.1in}
+\sectionfont{\large}
+
+\title{\vspace{-1cm}\textbf{A Multimodal Replicator Dynamics Model for Urban Transportation Networks}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.5cm}
+
+\section*{1. Network Structure and Demand}
+Consider a directed urban transport network modeled as a graph $G = (V, A)$, where $V$ is the set of nodes and $A$ is the set of directed links. Let $W$ be the set of Origin-Destination (OD) pairs, indexed by $w \in W$. Each OD pair $w$ is associated with a fixed travel demand $D_w$. 
+
+Let $M$ denote the set of available transportation modes (e.g., auto, transit, bicycle, pedestrian). For each OD pair $w$ and mode $m \in M$, there exists a predefined set of paths $R_{w,m}$. The total set of available paths for population $w$ is $R_w = \bigcup_{m \in M} R_{w,m}$.
+
+\section*{2. Flows and Cost Functions}
+Let $x_r(t) \ge 0$ denote the flow of individuals from population $w$ selecting path $r \in R_w$ at time $t$. The flow distribution satisfies the demand conservation constraint:
+\begin{equation}
+    \sum_{r \in R_w} x_r(t) = D_w, \quad \forall w \in W.
+\end{equation}
+
+To map path flows to link flows, we define the link-path incidence indicator $\delta_{a,r} \in \{0, 1\}$, which equals $1$ if link $a$ belongs to path $r$, and $0$ otherwise. The total flow of mode $m$ on link $a$, denoted $v_{a,m}$, aggregates the contributions from all OD pairs utilizing that link:
+\begin{equation}
+    v_{a,m} = \sum_{w \in W} \sum_{r \in R_{w,m}} x_r \delta_{a,r}.
+\end{equation}
+
+The cost function for mode $m$ on link $a$, $c_{a,m}(\mathbf{v}_a)$, extends the linear affine formulation to account for intra-modal and inter-modal congestion interactions. It is given by:
+\begin{equation}
+    c_{a,m}(\mathbf{v}_a) = B_{a,m} + \sum_{m' \in M} \mathcal{M}_{a, m, m'} v_{a,m'},
+\end{equation}
+where $B_{a,m}$ is the free-flow baseline cost for mode $m$ on link $a$, and $\mathcal{M}_{a, m, m'}$ is the marginal cost coefficient representing the delay induced by mode $m'$ on mode $m$. The total cost of traversing path $r \in R_{w,m}$ is the sum of its constituent link costs:
+\begin{equation}
+    C_r(\mathbf{x}) = \sum_{a \in A} \delta_{a,r} c_{a,m}(\mathbf{v}_a).
+\end{equation}
+
+\section*{3. Evolutionary Dynamics}
+The modal and route choice evolution is governed by multiclass replicator dynamics. The average travel cost experienced by population $w$ is defined as:
+\begin{equation}
+    \mu_w(\mathbf{x}) = \frac{1}{D_w} \sum_{r \in R_w} x_r C_r(\mathbf{x}).
+\end{equation}
+
+The rate of change of the flow on path $r$ is proportional to the difference between the population's average cost and the specific path cost:
+\begin{equation}
+    \dot{x}_r = \rho_w x_r \left( \mu_w(\mathbf{x}) - C_r(\mathbf{x}) \right), \quad \forall w \in W, \, \forall r \in R_w,
+\end{equation}
+where $\rho_w > 0$ denotes the adaptation rate of population $w$. Under this dynamic, paths with below-average costs attract flow, steering the system towards a user equilibrium state where all utilized paths for a given OD pair exhibit equal minimal costs.
+\end{document}

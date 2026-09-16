@@ -23,7 +23,7 @@ class ODReplicatorNetwork:
     def __init__(
         self,
         multilayer_graphs,
-        zones,
+        od_pairs,
         edge_lengths,
         edge_capacities,
         free_flow_speeds,
@@ -56,8 +56,6 @@ class ODReplicatorNetwork:
         self.graphs = multilayer_graphs
 
         self.K = len(multilayer_graphs)
-
-        self.zones = zones
 
         self.rho = rho
 
@@ -98,13 +96,7 @@ class ODReplicatorNetwork:
         # OD pairs
         # --------------------------------------------------
 
-        self.od_pairs = []
-
-        for i in zones:
-            for j in zones:
-
-                if i != j:
-                    self.od_pairs.append((i, j))
+        self.od_pairs = od_pairs
 
         self.N_od = len(self.od_pairs)
         
@@ -298,7 +290,6 @@ class ODReplicatorNetwork:
         self,
         t,
         x_flat,
-        od_demands=None,
     ):
         x = x_flat.reshape(
             self.N_od,
