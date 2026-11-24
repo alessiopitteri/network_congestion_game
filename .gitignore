@@ -2,3 +2,10 @@
 *__pycache__
 *.venv
 *.png
+
+# exclude seoul_multimodal_package folder
+*seoul_multimodal_package/data/
+*seoul_multimodal_package/figures/
+*seoul_multimodal_package/new_figures/
+*ABC_prediction
+*.npz
